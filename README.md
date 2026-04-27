@@ -6,6 +6,7 @@ Language: [English](README.md) | [Русский](README.ru.md)
 [![Language](https://img.shields.io/badge/language-EN%20%7C%20RU-informational)](README.ru.md)
 [![License](https://img.shields.io/github/license/foksk76/headplane.homelab)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
+[![Docs check](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml/badge.svg)](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml)
 
 Docs-first repository for building Headplane on an intermediate host and installing it natively on a VPS with Headscale and Caddy.
 
@@ -23,6 +24,10 @@ runtime artifact, service configuration, and reverse proxy changes.
 This README explains how to build Headplane `v0.6.2`, package the runtime
 correctly, transfer it to a VPS that already runs Headscale and Caddy, and avoid
 the specific pitfalls that showed up during the real installation.
+
+If you are looking for the initial Headscale installation itself, start with the
+[official Headscale installation documentation](https://headscale.net/stable/setup/install/official/).
+This repository begins after Headscale is already installed and reachable.
 
 ## Documentation style
 
