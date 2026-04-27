@@ -31,10 +31,10 @@ This repository begins after Headscale is already installed and reachable.
 
 Useful external references:
 
-- Headplane: `https://headplane.net/install`
-- Headplane configuration: `https://headplane.net/configuration`
-- Headscale Caddy reverse proxy: `https://docs.headscale.org/ref/integration/reverse-proxy/#caddy`
-- Caddy reverse proxy practice: `https://swetrix.com/blog/caddy-reverse-proxy`
+- [Headplane](https://headplane.net/install)
+- [Headplane configuration](https://headplane.net/configuration)
+- [Headscale Caddy reverse proxy](https://docs.headscale.org/ref/integration/reverse-proxy/#caddy)
+- [Caddy reverse proxy practice](https://swetrix.com/blog/caddy-reverse-proxy)
 
 ## Documentation style
 

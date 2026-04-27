@@ -13,5 +13,5 @@ Updated on 2026-04-27 UTC.
 ## Nice to have
 
 1. Add screenshots or terminal captures from a fresh validation run.
-2. Add a lightweight link check for README and docs navigation.
+2. Add scheduled link-check runs if external documentation links become flaky.
 3. Keep English and Russian guides aligned when installation steps change.
