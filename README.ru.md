@@ -2,6 +2,11 @@
 
 # Сборка Headplane в домашней лаборатории
 
+[![Документация](https://img.shields.io/badge/docs-Headplane%20homelab-blue)](README.ru.md)
+[![Языки](https://img.shields.io/badge/language-EN%20%7C%20RU-informational)](README.md)
+[![Лицензия](https://img.shields.io/github/license/foksk76/headplane.homelab)](LICENSE)
+[![Релиз](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
+
 Документационный репозиторий про сборку Headplane на промежуточном хосте и установку на VPS с Headscale и Caddy.
 
 > **Статус проекта:** рабочие заметки по установке Headplane `v0.6.2`, проверенные на промежуточном хосте сборки и Debian 13 VPS.

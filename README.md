@@ -2,6 +2,11 @@ Language: [English](README.md) | [Русский](README.ru.md)
 
 # Building Headplane in a Homelab
 
+[![Docs](https://img.shields.io/badge/docs-Headplane%20homelab-blue)](README.md)
+[![Language](https://img.shields.io/badge/language-EN%20%7C%20RU-informational)](README.ru.md)
+[![License](https://img.shields.io/github/license/foksk76/headplane.homelab)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
+
 Docs-first repository for building Headplane on an intermediate host and installing it natively on a VPS with Headscale and Caddy.
 
 > **Project status:** Working deployment notes for Headplane `v0.6.2`, validated with an intermediate Debian 13 build host and a Debian 13 VPS target.
