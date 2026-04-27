@@ -8,7 +8,14 @@
 [![Релиз](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
 [![Проверка ссылок](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml/badge.svg)](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml)
 
-Документационный репозиторий про сборку Headplane на промежуточном хосте и установку на VPS с Headscale и Caddy.
+Я пришел к этой схеме из обычной потребности: нужен удобный доступ к
+своим сервисам, но не хочется без необходимости выставлять их наружу. Headscale
+помогает собрать управляемый контур подключения, а Headplane добавляет к нему
+понятный веб-интерфейс. В итоге важные сервисы остаются под контролем, а
+обслуживание становится предсказуемым.
+
+Этот репозиторий описывает, как собрать Headplane на промежуточном хосте и
+установить его на VPS рядом с уже работающими Headscale и Caddy.
 
 > **Статус проекта:** рабочие заметки по установке Headplane `v0.6.2`, проверенные на промежуточном хосте сборки и Debian 13 VPS.
 

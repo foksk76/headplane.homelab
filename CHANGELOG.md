@@ -16,3 +16,4 @@ All notable changes to this repository will be documented in this file.
 - Documented how to generate `REPLACE_WITH_32_CHARS` and `REUSABLE_PREAUTHKEY`.
 - Added README badges and a GitHub Actions link-check workflow for documentation.
 - Moved external reference links into the overview section and made them clickable.
+- Added an introductory README paragraph describing the practical access problem behind the setup.

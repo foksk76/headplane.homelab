@@ -16,6 +16,7 @@ repository so work can resume quickly in another chat, shell, or host session.
 ## What is already prepared
 
 - Bilingual `README.md` and `README.ru.md`
+- Introductory README context describing the practical access problem and Headplane role
 - Step-by-step docs for build, transfer, install, verify, and troubleshooting
 - Russian step-by-step docs in `docs/ru/`
 - README badges and `Docs` link-check workflow in `.github/workflows/docs.yml`

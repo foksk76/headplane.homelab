@@ -8,7 +8,14 @@ Language: [English](README.md) | [Русский](README.ru.md)
 [![Release](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
 [![Docs check](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml/badge.svg)](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml)
 
-Docs-first repository for building Headplane on an intermediate host and installing it natively on a VPS with Headscale and Caddy.
+I came to this setup from an ordinary need: I wanted convenient access to my own
+services without publishing them more widely than necessary. Headscale helps
+create a managed connection layer, and Headplane adds a clear web interface on
+top. As a result, important services stay under control and operations become
+predictable.
+
+This repository explains how to build Headplane on an intermediate host and
+install it on a VPS alongside an existing Headscale and Caddy setup.
 
 > **Project status:** Working deployment notes for Headplane `v0.6.2`, validated with an intermediate Debian 13 build host and a Debian 13 VPS target.
 
