@@ -14,4 +14,5 @@ Updated on 2026-04-27 UTC.
 
 1. Add screenshots or terminal captures from a fresh validation run.
 2. Add scheduled link-check runs if external documentation links become flaky.
-3. Keep English and Russian guides aligned when installation steps change.
+3. Consider converting git tags into full GitHub Releases if the `/releases/latest` redirect needs richer release notes.
+4. Keep English and Russian guides aligned when installation steps change.

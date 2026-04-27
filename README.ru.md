@@ -5,7 +5,7 @@
 [![Документация](https://img.shields.io/badge/docs-Headplane%20homelab-blue)](README.ru.md)
 [![Языки](https://img.shields.io/badge/language-EN%20%7C%20RU-informational)](README.md)
 [![Лицензия](https://img.shields.io/github/license/foksk76/headplane.homelab)](LICENSE)
-[![Релиз](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
+[![Последний релиз](https://img.shields.io/github/v/tag/foksk76/headplane.homelab?label=latest%20release)](https://github.com/foksk76/headplane.homelab/releases/latest)
 [![Проверка ссылок](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml/badge.svg)](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml)
 
 Я пришел к этой схеме из обычной потребности: нужен удобный доступ к

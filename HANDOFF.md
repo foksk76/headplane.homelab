@@ -12,6 +12,7 @@ repository so work can resume quickly in another chat, shell, or host session.
 - Intended remote: `git@github.com:foksk76/headplane.homelab.git`
 - Repository status: published and synchronized with `origin/main`
 - Publication status: GitHub repository exists and receives pushes over SSH
+- Latest tag: `v0.1.1`
 
 ## What is already prepared
 

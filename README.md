@@ -5,7 +5,7 @@ Language: [English](README.md) | [Русский](README.ru.md)
 [![Docs](https://img.shields.io/badge/docs-Headplane%20homelab-blue)](README.md)
 [![Language](https://img.shields.io/badge/language-EN%20%7C%20RU-informational)](README.ru.md)
 [![License](https://img.shields.io/github/license/foksk76/headplane.homelab)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/foksk76/headplane.homelab?include_prereleases&label=release)](https://github.com/foksk76/headplane.homelab/releases)
+[![Latest release](https://img.shields.io/github/v/tag/foksk76/headplane.homelab?label=latest%20release)](https://github.com/foksk76/headplane.homelab/releases/latest)
 [![Docs check](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml/badge.svg)](https://github.com/foksk76/headplane.homelab/actions/workflows/docs.yml)
 
 I came to this setup from an ordinary need: I wanted convenient access to my own

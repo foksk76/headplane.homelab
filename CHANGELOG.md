@@ -2,6 +2,10 @@
 
 All notable changes to this repository will be documented in this file.
 
+## 0.1.1 - 2026-04-27
+
+- Updated the release badge to follow the latest repository tag.
+
 ## 2026-04-27
 
 - Prepared the local documentation version for building Headplane in a homelab.
