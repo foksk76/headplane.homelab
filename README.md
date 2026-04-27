@@ -29,6 +29,13 @@ If you are looking for the initial Headscale installation itself, start with the
 [official Headscale installation documentation](https://headscale.net/stable/setup/install/official/).
 This repository begins after Headscale is already installed and reachable.
 
+Useful external references:
+
+- Headplane: `https://headplane.net/install`
+- Headplane configuration: `https://headplane.net/configuration`
+- Headscale Caddy reverse proxy: `https://docs.headscale.org/ref/integration/reverse-proxy/#caddy`
+- Caddy reverse proxy practice: `https://swetrix.com/blog/caddy-reverse-proxy`
+
 ## Documentation style
 
 The documentation is organized as a short entry point for a new reader: diagram
@@ -79,13 +86,6 @@ Replace `headscale.example.net`, `build-host.internal`, `<BUILD_HOST_IP>`, and
 The layout follows common Headplane, Headscale, and Caddy guidance: one public
 HTTPS entry point, loopback listeners for backend services, and generated
 secrets kept out of the repository.
-
-Reference material:
-
-- Headplane: `https://headplane.net/install`
-- Headplane configuration: `https://headplane.net/configuration`
-- Headscale reverse proxy: `https://headscale.net/0.26.1/ref/integration/reverse-proxy/`
-- Caddy reverse proxy practice: `https://swetrix.com/blog/caddy-reverse-proxy`
 
 ## Requirements
 
