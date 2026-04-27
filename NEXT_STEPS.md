@@ -1,19 +1,17 @@
 # Next Steps
 
-Generated on 2026-04-25 UTC.
+Updated on 2026-04-27 UTC.
 
-## Immediate steps
+## Open tasks
 
-1. Create the GitHub repository `foksk76/headplane.homelab` or choose a different final name.
-2. Initialize local git history and push the prepared files.
-3. Add issue templates and a pull request template if the repository will be maintained actively.
-4. Add screenshots or terminal captures from the validated deployment.
-5. Consider adding automation for rebuilding and packaging Headplane on the intermediate host.
+1. Add automation for rebuilding and packaging Headplane on the intermediate host.
+2. Add rollback instructions for service and Caddy changes.
+3. Add an OIDC section for Headplane authentication.
+4. Add an agent-enabled installation path after web SSH is validated.
+5. Add a version matrix for future Headplane releases.
 
-## Content improvements
+## Nice to have
 
-1. Add a version matrix for future Headplane releases.
-2. Add an OIDC section for Headplane authentication.
-3. Add an agent-enabled installation path once web SSH is validated.
-4. Add rollback instructions for service or Caddy changes.
-
+1. Add screenshots or terminal captures from a fresh validation run.
+2. Add a lightweight link check for README and docs navigation.
+3. Keep English and Russian guides aligned when installation steps change.
