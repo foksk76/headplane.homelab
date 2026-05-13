@@ -9,6 +9,8 @@ Updated on 2026-05-13 UTC.
 3. Add a version matrix for future Headplane releases.
 4. Revalidate the OIDC path on a fresh VPS with a real external IdP and capture
    the exact bootstrap flow.
+5. Recheck the upgrade guide once `0.7.x` becomes stable and compare the field
+   naming against the public docs site again.
 
 ## Nice to have
 

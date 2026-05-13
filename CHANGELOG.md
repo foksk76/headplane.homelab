@@ -14,18 +14,26 @@ packaging, proxying, installation, or verification flow.
   risky changes.
 - A validated rollback note for the case where a host is restored from a
   pre-OIDC backup after later OIDC-related changes.
+- A dedicated upgrade guide for checking the latest stable release and
+  upgrading older native installs to `v0.6.2`.
 
 ### Changed
 
 - The login flow now documents both Headscale API key access and Headplane's
   native OIDC path.
 - The guide naming now follows the numbered step-by-step style across OIDC,
-  backup/restore, and troubleshooting.
+  backup/restore, upgrade, and troubleshooting.
 - The OIDC configuration notes now reflect the validated `v0.6.2` behavior
-  using `oidc.headscale_api_key`.
+  using `oidc.headscale_api_key` or `oidc.headscale_api_key_path`.
 - The backup and restore flow now explicitly covers optional local IdP files,
   cleanup of newer OIDC artifacts before rollback, and the expected loss of API
   keys created after the backup point.
+- The build guide now reflects the upstream `v0.6.2` engine constraints and the
+  practical `Go 1.23+` requirement behind `./build.sh`.
+- The OIDC guide now documents `oidc.enabled: true` and the file-based
+  `oidc.headscale_api_key_path` option for `v0.6.2`.
+- Troubleshooting now explicitly calls out the version-specific `v0.6.2` OIDC
+  field naming.
 
 ## 0.1.1 - 2026-04-27
 

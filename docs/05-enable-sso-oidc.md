@@ -6,9 +6,10 @@ This guide adds browser SSO through Headplane's built-in OIDC mechanism.
 It assumes that the base installation from this repository is already working.
 
 > Status: This path was rechecked against a live Debian 13 VPS with a local test
-> IdP. One version-specific detail matters: Headplane `v0.6.2` expects
-> `oidc.headscale_api_key` in the `oidc` block. The rollback path was also
-> rechecked afterward against a pre-OIDC backup.
+> IdP. One version-specific detail matters: Headplane `v0.6.2` uses
+> `oidc.headscale_api_key` or `oidc.headscale_api_key_path` inside the `oidc`
+> block. The rollback path was also rechecked afterward against a pre-OIDC
+> backup.
 
 ## Goal
 
@@ -54,7 +55,9 @@ Store the OIDC client secret on disk:
 ```bash
 install -d -m 0700 /etc/headplane/secrets
 printf '%s\n' 'REPLACE_WITH_OIDC_CLIENT_SECRET' > /etc/headplane/secrets/oidc_client_secret
+printf '%s\n' 'REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY' > /etc/headplane/secrets/oidc_headscale_api_key
 chmod 0600 /etc/headplane/secrets/oidc_client_secret
+chmod 0600 /etc/headplane/secrets/oidc_headscale_api_key
 ```
 
 Use a real OIDC client secret from your identity provider.
@@ -65,8 +68,9 @@ Merge this into your existing configuration for `v0.6.2`:
 
 ```yaml
 oidc:
+  enabled: true
   issuer: "https://idp.example.com"
-  headscale_api_key: "REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY"
+  headscale_api_key_path: "/etc/headplane/secrets/oidc_headscale_api_key"
   client_id: "REPLACE_WITH_OIDC_CLIENT_ID"
   client_secret_path: "/etc/headplane/secrets/oidc_client_secret"
   scope: "openid email profile"
@@ -76,8 +80,13 @@ oidc:
 
 Notes:
 
-- in `v0.6.2`, `oidc.headscale_api_key` is required for OIDC in Headplane
+- in `v0.6.2`, OIDC uses `oidc.headscale_api_key` or
+  `oidc.headscale_api_key_path`
+- `enabled: true` makes the OIDC intent explicit and matches the `v0.6.2`
+  release behavior
 - `client_secret_path` keeps the OIDC secret out of the main config file
+- `headscale_api_key_path` keeps the long-lived Headscale API key out of the
+  main config file too
 - Headplane can auto-discover the authorization, token, and userinfo endpoints
   from the issuer metadata
 - `use_pkce: true` is a good default because some IdPs insist on it
@@ -85,6 +94,9 @@ Notes:
 
 If your provider requires extra authorization parameters, add them under
 `oidc.extra_params`.
+
+If you compare this with newer public-site examples and see `headscale.api_key`,
+stick to the tagged `v0.6.2` field names above for this repository.
 
 ## Optional: local test IdP
 

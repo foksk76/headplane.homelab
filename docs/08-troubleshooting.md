@@ -1,4 +1,4 @@
-Language: [English](07-troubleshooting.md) | [Русский](ru/07-troubleshooting.md)
+Language: [English](08-troubleshooting.md) | [Русский](ru/08-troubleshooting.md)
 
 # Troubleshooting
 
@@ -101,6 +101,21 @@ Fix:
 - list current keys with `headscale apikeys list`
 - mint a new key if you still need API key login after the restore
 
+## OIDC is still misconfigured after copying a newer docs example
+
+Cause:
+
+- you copied `headscale.api_key` from newer docs wording into a `v0.6.2`
+  install
+- the tagged `v0.6.2` runtime still expects the OIDC API key under the `oidc`
+  section
+
+Fix:
+
+- for `v0.6.2`, use `oidc.headscale_api_key` or
+  `oidc.headscale_api_key_path`
+- keep `oidc.enabled: true` explicit when enabling OIDC
+
 ## Headplane starts, but cannot integrate with Headscale settings
 
 Cause:
@@ -141,4 +156,4 @@ This is cosmetic and does not block runtime if `caddy validate` already says
 
 ## Navigation
 
-Previous: [Backup and restore](06-backup-and-restore.md) | Next: [Quick start](../README.md#quick-start)
+Previous: [Upgrade Headplane](07-upgrade-headplane.md) | Next: [Quick start](../README.md#quick-start)

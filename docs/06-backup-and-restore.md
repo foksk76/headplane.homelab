@@ -171,4 +171,4 @@ moment of the archive. Do that only when you mean it.
 
 ## Navigation
 
-Previous: [Enable SSO with OIDC](05-enable-sso-oidc.md) | Next: [Troubleshoot if needed](07-troubleshooting.md)
+Previous: [Enable SSO with OIDC](05-enable-sso-oidc.md) | Next: [Upgrade Headplane](07-upgrade-headplane.md)

@@ -7,8 +7,9 @@
 
 > Статус: этот путь повторно проверен на живом Debian 13 VPS с локальным
 > тестовым поставщиком удостоверений. Есть одна важная поправка по версии:
-> Headplane `v0.6.2` ожидает `oidc.headscale_api_key` внутри блока `oidc`.
-> Откат на резервную копию, снятую до включения OIDC, тоже отдельно прогнан.
+> Headplane `v0.6.2` использует `oidc.headscale_api_key` или
+> `oidc.headscale_api_key_path` внутри блока `oidc`. Откат на резервную копию,
+> снятую до включения OIDC, тоже отдельно прогнан.
 
 ## Цель
 
@@ -57,7 +58,9 @@ https://headscale.example.net/admin/oidc/callback
 ```bash
 install -d -m 0700 /etc/headplane/secrets
 printf '%s\n' 'REPLACE_WITH_OIDC_CLIENT_SECRET' > /etc/headplane/secrets/oidc_client_secret
+printf '%s\n' 'REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY' > /etc/headplane/secrets/oidc_headscale_api_key
 chmod 0600 /etc/headplane/secrets/oidc_client_secret
+chmod 0600 /etc/headplane/secrets/oidc_headscale_api_key
 ```
 
 Подставьте реальный секрет клиента OIDC от своего поставщика удостоверений.
@@ -69,8 +72,9 @@ chmod 0600 /etc/headplane/secrets/oidc_client_secret
 
 ```yaml
 oidc:
+  enabled: true
   issuer: "https://idp.example.com"
-  headscale_api_key: "REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY"
+  headscale_api_key_path: "/etc/headplane/secrets/oidc_headscale_api_key"
   client_id: "REPLACE_WITH_OIDC_CLIENT_ID"
   client_secret_path: "/etc/headplane/secrets/oidc_client_secret"
   scope: "openid email profile"
@@ -80,9 +84,13 @@ oidc:
 
 Замечания:
 
-- в `v0.6.2` для OIDC обязателен `oidc.headscale_api_key`
+- в `v0.6.2` для OIDC используется `oidc.headscale_api_key` или
+  `oidc.headscale_api_key_path`
+- `enabled: true` явно включает OIDC и совпадает с поведением релиза `v0.6.2`
 - `client_secret_path` позволяет не хранить секрет клиента прямо в основном
   конфиге
+- `headscale_api_key_path` по той же причине позволяет не держать длинный ключ
+  API Headscale в основном конфиге
 - Headplane сам умеет находить `authorization`, `token` и `userinfo` endpoint
   по метаданным `issuer`
 - `use_pkce: true` — хороший вариант по умолчанию, потому что некоторые
@@ -91,6 +99,10 @@ oidc:
 
 Если поставщику удостоверений нужны дополнительные параметры авторизации,
 добавьте их в `oidc.extra_params`.
+
+Если рядом окажутся более новые примеры с публичного сайта и там будет
+`headscale.api_key`, для релиза `v0.6.2` из этого репозитория используйте
+именно поля из примера выше.
 
 ## Дополнительно: локальный тестовый поставщик удостоверений
 

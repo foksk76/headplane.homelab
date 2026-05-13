@@ -153,7 +153,8 @@ systemctl reload caddy
 - `server.base_url` должен оставаться на публичном URL без `/admin`
 - адрес возврата (`redirect URI`) у поставщика удостоверений должен быть
   `{server.base_url}/admin/oidc/callback`
-- для OIDC в Headplane `v0.6.2` нужен `oidc.headscale_api_key`
+- для OIDC в Headplane `v0.6.2` используется `oidc.headscale_api_key` или
+  `oidc.headscale_api_key_path`
 - вход по ключу API остается доступным и после включения OIDC
 
 Полный сценарий настройки вынесен в отдельную инструкцию:

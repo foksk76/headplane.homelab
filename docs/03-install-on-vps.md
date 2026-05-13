@@ -152,7 +152,8 @@ mind while finishing the base install:
 
 - `server.base_url` must stay on the public URL without `/admin`
 - the IdP redirect URI must be `{server.base_url}/admin/oidc/callback`
-- Headplane `v0.6.2` expects `oidc.headscale_api_key` for OIDC
+- Headplane `v0.6.2` uses `oidc.headscale_api_key` or
+  `oidc.headscale_api_key_path` for OIDC
 - API key login remains available even after OIDC is enabled
 
 Full SSO setup steps live here:

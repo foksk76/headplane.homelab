@@ -175,4 +175,4 @@ Headscale к моменту создания архива. Делайте это
 
 ## Навигация
 
-Назад: [Включение единого входа через OIDC](05-enable-sso-oidc.md) | Вперед: [Диагностика](07-troubleshooting.md)
+Назад: [Включение единого входа через OIDC](05-enable-sso-oidc.md) | Вперед: [Обновление Headplane](07-upgrade-headplane.md)

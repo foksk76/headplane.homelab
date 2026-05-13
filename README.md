@@ -19,9 +19,10 @@ install it on a VPS alongside an existing Headscale and Caddy setup.
 
 > **Project status:** Working deployment notes for Headplane `v0.6.2`,
 > validated with an intermediate Debian 13 build host and a Debian 13 VPS
-> target. The current notes also include a live rollback drill from a pre-OIDC
-> backup, including the expected invalidation of newer Headscale API keys after
-> restoring `db.sqlite`.
+> target. As of May 13, 2026, `v0.6.2` is still the latest stable Headplane
+> release used by this repository. The current notes also include a live
+> rollback drill from a pre-OIDC backup, including the expected invalidation of
+> newer Headscale API keys after restoring `db.sqlite`.
 
 > **Language policy:** `README.md` is the main English README. `README.ru.md` is the main Russian translation for homelab work and fast onboarding. Keep the language switcher as the first line in both files.
 
@@ -150,7 +151,9 @@ secrets kept out of the repository.
 - `docs/05-enable-sso-oidc.md` - enable SSO with Headplane's built-in OIDC flow
 - `docs/06-backup-and-restore.md` - backup and restore before and after changes,
   including rollback cleanup for older pre-OIDC archives
-- `docs/07-troubleshooting.md` - troubleshooting
+- `docs/07-upgrade-headplane.md` - check the latest stable release and upgrade
+  an older native install to `v0.6.2`
+- `docs/08-troubleshooting.md` - troubleshooting
 - `HANDOFF.md` - current repository handoff state
 - `NEXT_STEPS.md` - next improvements for the repository and deployment process
 - `CHANGELOG.md` - change history for the validated deployment path
@@ -169,7 +172,8 @@ bundle, install it natively on the VPS, update Caddy, then verify `/admin`.
 4. [Verify and log in](docs/04-verify-and-login.md)
 5. [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
 6. [Backup and restore](docs/06-backup-and-restore.md)
-7. [Troubleshoot if needed](docs/07-troubleshooting.md)
+7. [Upgrade Headplane](docs/07-upgrade-headplane.md)
+8. [Troubleshoot if needed](docs/08-troubleshooting.md)
 
 ### 2. Minimal build summary
 
@@ -219,6 +223,7 @@ base install is healthy:
 
 - [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
 - [Backup and restore](docs/06-backup-and-restore.md)
+- [Upgrade Headplane](docs/07-upgrade-headplane.md)
 
 If you later roll back to an older archive, read the restore guide first. A
 Headscale database restore rewinds API keys too, so anything minted after the
