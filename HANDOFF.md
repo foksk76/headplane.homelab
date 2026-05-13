@@ -7,7 +7,7 @@ repository so work can resume quickly in another chat, shell, or host session.
 
 ## Current snapshot
 
-- Updated: 2026-04-27 UTC
+- Updated: 2026-05-13 UTC
 - Repository path: `/root/headplane.homelab`
 - Intended remote: `git@github.com:foksk76/headplane.homelab.git`
 - Repository status: published and synchronized with `origin/main`
@@ -19,6 +19,7 @@ repository so work can resume quickly in another chat, shell, or host session.
 - Bilingual `README.md` and `README.ru.md`
 - Introductory README context describing the practical access problem and Headplane role
 - Step-by-step docs for build, transfer, install, verify, and troubleshooting
+- Optional OIDC guide based on Headplane's built-in SSO path
 - Russian step-by-step docs in `docs/ru/`
 - README badges and `Docs` link-check workflow in `.github/workflows/docs.yml`
 - Repo support files: `CHANGELOG.md` as the change history for the deployment path, plus `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, and `LICENSE`

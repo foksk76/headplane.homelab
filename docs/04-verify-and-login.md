@@ -57,7 +57,9 @@ Expected examples:
 - `/admin/machines` redirects to `/admin/login` before authentication
 - `/health` returns `200 OK`
 
-## Create the first login key
+## Choose the first login method
+
+### API key login
 
 Headplane uses a Headscale API key for login if OIDC is not configured.
 
@@ -72,6 +74,29 @@ https://headscale.example.net/admin/login
 ```
 
 Use the generated API key in the Headplane login form.
+
+### OIDC login
+
+If you enabled Headplane's built-in OIDC support, open the same login page:
+
+```text
+https://headscale.example.net/admin/login
+```
+
+Then sign in through your configured identity provider.
+
+Important behavior from Headplane's native OIDC flow:
+
+- the very first OIDC user becomes `Owner`
+- later OIDC users start as `Member` until an owner or admin promotes them
+- API key sessions still bypass the role system and keep full administrative
+  access
+- if Headscale itself uses local users instead of OIDC, Headplane prompts the
+  user once to choose the matching Headscale identity during onboarding
+
+If you have not enabled OIDC yet, follow the optional guide first:
+
+- [Optional: enable OIDC in Headplane](optional-enable-oidc.md)
 
 ## Optional journal checks
 
@@ -89,6 +114,13 @@ During the validated deployment, the stable startup log included:
 [server] INFO: Running on 127.0.0.1:3000
 ```
 
+For OIDC-specific checks, inspect the recent service log after the first browser
+login attempt:
+
+```bash
+journalctl -u headplane -n 100 --no-pager | grep -i oidc
+```
+
 ## Navigation
 
-Previous: [Install on the VPS](03-install-on-vps.md) | Next: [Troubleshoot if needed](05-troubleshooting.md)
+Previous: [Install on the VPS](03-install-on-vps.md) | Next: [Optional: enable OIDC in Headplane](optional-enable-oidc.md)

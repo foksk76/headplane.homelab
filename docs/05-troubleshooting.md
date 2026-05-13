@@ -47,6 +47,47 @@ Fix:
 - if the public path is HTTPS behind Caddy, keep `cookie_secure: true`
 - if testing plain HTTP directly, use `cookie_secure: false`
 
+## `OIDC is not enabled or misconfigured`
+
+Cause:
+
+- the `oidc` block is missing from `/etc/headplane/config.yaml`
+- `issuer` is wrong or unreachable from the VPS
+- `headscale.api_key` or `headscale.api_key_path` is missing
+
+Fix:
+
+- add a complete `oidc` section
+- verify that the issuer URL is reachable from the Headplane host
+- provide a working long-lived Headscale API key for server-side OIDC actions
+
+## `Redirect URI Mismatch` during IdP login
+
+Cause:
+
+- the callback registered in the IdP does not exactly match Headplane's public
+  callback URL
+
+Fix:
+
+- register `https://headscale.example.net/admin/oidc/callback`
+- keep `server.base_url` as `https://headscale.example.net`
+- do not append `/admin` to `server.base_url`
+
+## User signs in through OIDC but cannot see their machines
+
+Cause:
+
+- Headplane could not match the OIDC identity to a Headscale user
+
+Fix:
+
+- if Headscale already uses OIDC, prefer the same OIDC client for both services
+- make sure the IdP provides the `sub` claim
+- if you use different clients, make sure the `email` claim is available
+- if Headscale uses local users, complete the one-time manual user selection in
+  Headplane onboarding
+
 ## Headplane starts, but cannot integrate with Headscale settings
 
 Cause:
@@ -87,4 +128,4 @@ This is cosmetic and does not block runtime if `caddy validate` already says
 
 ## Navigation
 
-Previous: [Verify and log in](04-verify-and-login.md) | Next: [Quick start](../README.md#quick-start)
+Previous: [Optional: enable OIDC in Headplane](optional-enable-oidc.md) | Next: [Quick start](../README.md#quick-start)

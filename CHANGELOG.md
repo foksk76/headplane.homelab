@@ -5,6 +5,18 @@ repository.
 It does not list routine edits to the prose unless they change the actual build,
 packaging, proxying, installation, or verification flow.
 
+## Unreleased
+
+### Added
+
+- An optional OIDC authentication path using Headplane's built-in SSO
+  mechanism, including callback handling and secret-file examples.
+
+### Changed
+
+- The login flow now documents both Headscale API key access and Headplane's
+  native OIDC path.
+
 ## 0.1.1 - 2026-04-27
 
 ### Added
