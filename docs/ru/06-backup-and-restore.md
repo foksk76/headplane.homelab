@@ -5,6 +5,12 @@
 Эта инструкция описывает схему резервного копирования и восстановления перед
 изменениями в Headplane, Headscale или обратном прокси на рабочем VPS.
 
+> Статус: повторно проверено на живом откате из резервной копии, снятой до
+> включения OIDC, на Debian 13. В проверенный сценарий вошли очистка более
+> новых файлов локального поставщика удостоверений перед восстановлением и
+> подтверждение того, что ключи API Headscale, созданные уже после резервной
+> копии, перестают работать после возврата `db.sqlite`.
+
 ## Цель
 
 Сохранить точку отката для конфигурации и локального состояния перед правкой:
@@ -14,6 +20,8 @@
 - `/etc/caddy/Caddyfile`
 - `headplane.service`
 - SQLite-баз Headplane и Headscale
+- дополнительных файлов локального поставщика удостоверений, если OIDC
+  обслуживается через такой вспомогательный сервис, как Dex
 
 ## Когда делать резервную копию
 
@@ -50,8 +58,11 @@ tar -czf "/root/${backup_name}" \
   /etc/headplane \
   /etc/headscale \
   /etc/caddy/Caddyfile \
+  /etc/dex \
   /etc/systemd/system/headplane.service \
   /usr/lib/systemd/system/headscale.service \
+  /etc/systemd/system/dex.service \
+  /usr/local/bin/dex \
   /var/lib/headplane/hp_persist.db \
   /var/lib/headscale/db.sqlite \
   /var/lib/headscale/noise_private.key \
@@ -63,6 +74,8 @@ tar -czf "/root/${backup_name}" \
 - `--ignore-failed-read` полезен, потому что не на каждом хосте есть все
   дополнительные файлы
 - отсутствие дополнительного DERP-ключа не считается аварией
+- отсутствие `/etc/dex`, `dex.service` или `/usr/local/bin/dex` на машине,
+  где локальный поставщик удостоверений никогда не поднимался, тоже нормально
 - архив нужен для отката, а не для прогулок по публичным сервисам
 
 ## Скопируйте архив на хост сборки
@@ -88,9 +101,24 @@ tar -tzf "/root/backups/${backup_name}" | sed -n '1,80p'
 Перед восстановлением остановите службы:
 
 ```bash
+systemctl stop dex || true
 systemctl stop headplane
 systemctl stop caddy
 systemctl stop headscale
+```
+
+Если откат идет с более нового состояния, где OIDC уже был включен, на более
+старый архив, снятый до этого, сначала удалите новые OIDC-файлы. Простая
+распаковка старого архива не удаляет более поздние хвосты сама по себе.
+
+Проверенный пример очистки:
+
+```bash
+rm -rf /etc/dex
+rm -f /etc/systemd/system/dex.service
+rm -f /usr/local/bin/dex
+rm -f /etc/headplane/secrets/oidc_client_secret
+rm -f /etc/headplane/oidc_client_secret
 ```
 
 Потом распакуйте архив:
@@ -126,6 +154,13 @@ curl -I https://headscale.example.net/admin/
 - Caddy в состоянии `active`
 - `/health` отвечает через Headscale
 - `/admin/` снова попадает в Headplane
+- если архив был снят до включения OIDC, на странице входа больше нет элементов
+  единого входа
+
+Если вы восстановили более старую базу Headscale, дополнительно проверьте, что
+ключи API, выпущенные уже после отметки времени этой резервной копии, больше не
+работают. Это ожидаемое поведение и хороший признак того, что откат реально
+вернул локальное состояние назад.
 
 ## Что эта инструкция не восстанавливает
 

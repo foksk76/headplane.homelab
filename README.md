@@ -17,7 +17,11 @@ predictable.
 This repository explains how to build Headplane on an intermediate host and
 install it on a VPS alongside an existing Headscale and Caddy setup.
 
-> **Project status:** Working deployment notes for Headplane `v0.6.2`, validated with an intermediate Debian 13 build host and a Debian 13 VPS target.
+> **Project status:** Working deployment notes for Headplane `v0.6.2`,
+> validated with an intermediate Debian 13 build host and a Debian 13 VPS
+> target. The current notes also include a live rollback drill from a pre-OIDC
+> backup, including the expected invalidation of newer Headscale API keys after
+> restoring `db.sqlite`.
 
 > **Language policy:** `README.md` is the main English README. `README.ru.md` is the main Russian translation for homelab work and fast onboarding. Keep the language switcher as the first line in both files.
 
@@ -75,6 +79,9 @@ build-host.internal
 6. Install Headplane under `/opt/headplane`, configure `/etc/headplane/config.yaml`, add a `systemd` unit, and update Caddy to route `/admin`.
 7. Verify local and external HTTP paths, then log in either with a Headscale
    API key or through Headplane's built-in OIDC support.
+8. Keep a rollback archive before auth or proxy changes, and expect API keys
+   created after that backup to die after a database restore. Slightly rude,
+   fully expected.
 
 ## Who this is for
 
@@ -141,7 +148,8 @@ secrets kept out of the repository.
 - `docs/03-install-on-vps.md` - native install on the anonymized VPS
 - `docs/04-verify-and-login.md` - health checks and login verification
 - `docs/05-enable-sso-oidc.md` - enable SSO with Headplane's built-in OIDC flow
-- `docs/06-backup-and-restore.md` - backup and restore before and after changes
+- `docs/06-backup-and-restore.md` - backup and restore before and after changes,
+  including rollback cleanup for older pre-OIDC archives
 - `docs/07-troubleshooting.md` - troubleshooting
 - `HANDOFF.md` - current repository handoff state
 - `NEXT_STEPS.md` - next improvements for the repository and deployment process
@@ -211,6 +219,10 @@ base install is healthy:
 
 - [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
 - [Backup and restore](docs/06-backup-and-restore.md)
+
+If you later roll back to an older archive, read the restore guide first. A
+Headscale database restore rewinds API keys too, so anything minted after the
+backup timestamp is expected to stop working.
 
 ### 4. Verify the result
 

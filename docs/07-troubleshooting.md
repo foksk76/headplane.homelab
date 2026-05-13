@@ -88,6 +88,19 @@ Fix:
 - if Headscale uses local users, complete the one-time manual user selection in
   Headplane onboarding
 
+## API key stopped working after restore
+
+Cause:
+
+- you restored an older `db.sqlite`
+- the API key was created after the backup timestamp
+
+Fix:
+
+- treat this as expected rollback behavior, not a fresh bug
+- list current keys with `headscale apikeys list`
+- mint a new key if you still need API key login after the restore
+
 ## Headplane starts, but cannot integrate with Headscale settings
 
 Cause:

@@ -12,6 +12,8 @@ packaging, proxying, installation, or verification flow.
 - A dedicated SSO guide for Headplane's built-in OIDC flow.
 - A dedicated backup and restore guide for configuration and local state before
   risky changes.
+- A validated rollback note for the case where a host is restored from a
+  pre-OIDC backup after later OIDC-related changes.
 
 ### Changed
 
@@ -21,6 +23,9 @@ packaging, proxying, installation, or verification flow.
   backup/restore, and troubleshooting.
 - The OIDC configuration notes now reflect the validated `v0.6.2` behavior
   using `oidc.headscale_api_key`.
+- The backup and restore flow now explicitly covers optional local IdP files,
+  cleanup of newer OIDC artifacts before rollback, and the expected loss of API
+  keys created after the backup point.
 
 ## 0.1.1 - 2026-04-27
 

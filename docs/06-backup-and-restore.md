@@ -5,6 +5,11 @@ Language: [English](06-backup-and-restore.md) | [Русский](ru/06-backup-an
 This guide captures the backup and restore pattern used before changing
 Headplane, Headscale, or the reverse proxy on a live VPS.
 
+> Status: Rechecked against a live rollback from a pre-OIDC backup on Debian 13.
+> The validated path included cleanup of newer local IdP files before restore
+> and confirmed that Headscale API keys created after the backup point stopped
+> working after `db.sqlite` was restored.
+
 ## Goal
 
 Keep a rollback point for configuration and local state before touching:
@@ -14,6 +19,7 @@ Keep a rollback point for configuration and local state before touching:
 - `/etc/caddy/Caddyfile`
 - `headplane.service`
 - Headplane and Headscale SQLite databases
+- optional local IdP files if you run OIDC through a local helper such as Dex
 
 ## When to take a backup
 
@@ -50,8 +56,11 @@ tar -czf "/root/${backup_name}" \
   /etc/headplane \
   /etc/headscale \
   /etc/caddy/Caddyfile \
+  /etc/dex \
   /etc/systemd/system/headplane.service \
   /usr/lib/systemd/system/headscale.service \
+  /etc/systemd/system/dex.service \
+  /usr/local/bin/dex \
   /var/lib/headplane/hp_persist.db \
   /var/lib/headscale/db.sqlite \
   /var/lib/headscale/noise_private.key \
@@ -63,6 +72,8 @@ Notes:
 - `--ignore-failed-read` is useful because not every host has every optional
   file
 - it is fine if an optional DERP key is absent
+- it is also fine if `/etc/dex`, `dex.service`, or `/usr/local/bin/dex` do not
+  exist on a host that never used a local IdP
 - the archive is meant for rollback, not for public sharing
 
 ## Copy the backup to the build host
@@ -89,9 +100,24 @@ databases.
 Stop the services before restoring files:
 
 ```bash
+systemctl stop dex || true
 systemctl stop headplane
 systemctl stop caddy
 systemctl stop headscale
+```
+
+If you are rolling back from a newer OIDC-enabled state to an older pre-OIDC
+archive, remove the newer OIDC-only files first. Extracting an older tarball
+does not delete newer leftovers for you.
+
+Validated cleanup example:
+
+```bash
+rm -rf /etc/dex
+rm -f /etc/systemd/system/dex.service
+rm -f /usr/local/bin/dex
+rm -f /etc/headplane/secrets/oidc_client_secret
+rm -f /etc/headplane/oidc_client_secret
 ```
 
 Restore from the archive:
@@ -127,6 +153,11 @@ Expected shape:
 - Caddy is `active`
 - `/health` answers through Headscale
 - `/admin/` reaches Headplane again
+- if the archive predates OIDC, the login page no longer shows SSO controls
+
+If you restored an older Headscale database, also verify that API keys minted
+after the backup timestamp no longer work. That behavior is expected and is a
+good sign that the rollback really rewound the local state.
 
 ## What this guide does not restore
 

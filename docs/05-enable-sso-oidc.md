@@ -7,7 +7,8 @@ It assumes that the base installation from this repository is already working.
 
 > Status: This path was rechecked against a live Debian 13 VPS with a local test
 > IdP. One version-specific detail matters: Headplane `v0.6.2` expects
-> `oidc.headscale_api_key` in the `oidc` block.
+> `oidc.headscale_api_key` in the `oidc` block. The rollback path was also
+> rechecked afterward against a pre-OIDC backup.
 
 ## Goal
 
@@ -31,6 +32,8 @@ Good to know before you start:
 - if Headscale itself uses local users instead of OIDC, automatic matching will
   not work on the first login; the user will choose their Headscale identity
   once during onboarding
+- if you mint a fresh Headscale API key for OIDC after taking a backup, that
+  key will disappear after restoring an older `db.sqlite`
 
 ## Register the callback URL
 
@@ -98,6 +101,10 @@ https://headscale.example.net/idp
 
 This is useful for smoke tests, but a real external IdP is still the proper
 destination for a long-lived setup.
+
+If you later roll this back with an older archive, also remove the newer local
+IdP bits that were added after the backup point. The restore guide has the
+cleanup pattern.
 
 ## Restart Headplane
 
