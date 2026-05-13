@@ -145,6 +145,21 @@ caddy validate --config /etc/caddy/Caddyfile
 systemctl reload caddy
 ```
 
+## Optional: plan for OIDC now
+
+If you want to use Headplane's built-in OIDC login later, keep these points in
+mind while finishing the base install:
+
+- `server.base_url` must stay on the public URL without `/admin`
+- the IdP redirect URI must be `{server.base_url}/admin/oidc/callback`
+- Headplane `v0.6.2` uses `oidc.headscale_api_key` or
+  `oidc.headscale_api_key_path` for OIDC
+- API key login remains available even after OIDC is enabled
+
+Full SSO setup steps live here:
+
+- [Enable SSO with OIDC](05-enable-sso-oidc.md)
+
 ## Optional: enable agent later
 
 If you want web SSH later, use this shape:

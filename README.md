@@ -17,7 +17,12 @@ predictable.
 This repository explains how to build Headplane on an intermediate host and
 install it on a VPS alongside an existing Headscale and Caddy setup.
 
-> **Project status:** Working deployment notes for Headplane `v0.6.2`, validated with an intermediate Debian 13 build host and a Debian 13 VPS target.
+> **Project status:** Working deployment notes for Headplane `v0.6.2`,
+> validated with an intermediate Debian 13 build host and a Debian 13 VPS
+> target. As of May 13, 2026, `v0.6.2` is still the latest stable Headplane
+> release used by this repository. The current notes also include a live
+> rollback drill from a pre-OIDC backup, including the expected invalidation of
+> newer Headscale API keys after restoring `db.sqlite`.
 
 > **Language policy:** `README.md` is the main English README. `README.ru.md` is the main Russian translation for homelab work and fast onboarding. Keep the language switcher as the first line in both files.
 
@@ -40,6 +45,7 @@ Useful external references:
 
 - [Headplane](https://headplane.net/install)
 - [Headplane configuration](https://headplane.net/configuration)
+- [Headplane SSO / OIDC](https://headplane.net/features/sso)
 - [Headscale Caddy reverse proxy](https://docs.headscale.org/ref/integration/reverse-proxy/#caddy)
 - [Caddy reverse proxy practice](https://swetrix.com/blog/caddy-reverse-proxy)
 
@@ -72,13 +78,19 @@ build-host.internal
 4. Create a runtime archive that also includes `drizzle/` migrations.
 5. Transfer the archive to the VPS.
 6. Install Headplane under `/opt/headplane`, configure `/etc/headplane/config.yaml`, add a `systemd` unit, and update Caddy to route `/admin`.
-7. Verify local and external HTTP paths, then log in with a Headscale API key.
+7. Verify local and external HTTP paths, then log in either with a Headscale
+   API key or through Headplane's built-in OIDC support.
+8. Keep a rollback archive before auth or proxy changes, and expect API keys
+   created after that backup to die after a database restore. Slightly rude,
+   fully expected.
 
 ## Who this is for
 
 - you already run Headscale on a VPS but want the web management UI that Headscale itself does not provide
 - you prefer building on a separate host and copying only the ready runtime archive to the VPS
 - you want a clear install order with checks after the important steps
+- you want a simple fallback login path with an API key and an optional path for
+  IdP-backed OIDC sign-in
 
 ## Installation Components
 
@@ -136,10 +148,15 @@ secrets kept out of the repository.
 - `docs/02-transfer-runtime-artifact.md` - transfer the runtime bundle to the VPS
 - `docs/03-install-on-vps.md` - native install on the anonymized VPS
 - `docs/04-verify-and-login.md` - health checks and login verification
-- `docs/05-troubleshooting.md` - troubleshooting
+- `docs/05-enable-sso-oidc.md` - enable SSO with Headplane's built-in OIDC flow
+- `docs/06-backup-and-restore.md` - backup and restore before and after changes,
+  including rollback cleanup for older pre-OIDC archives
+- `docs/07-upgrade-headplane.md` - check the latest stable release and upgrade
+  an older native install to `v0.6.2`
+- `docs/08-troubleshooting.md` - troubleshooting
 - `HANDOFF.md` - current repository handoff state
 - `NEXT_STEPS.md` - next improvements for the repository and deployment process
-- `CHANGELOG.md` - documentation history
+- `CHANGELOG.md` - change history for the validated deployment path
 - `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `LICENSE` - repository governance files
 
 ## Quick start
@@ -153,7 +170,10 @@ bundle, install it natively on the VPS, update Caddy, then verify `/admin`.
 2. [Transfer the runtime artifact](docs/02-transfer-runtime-artifact.md)
 3. [Install on the VPS](docs/03-install-on-vps.md)
 4. [Verify and log in](docs/04-verify-and-login.md)
-5. [Troubleshoot if needed](docs/05-troubleshooting.md)
+5. [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
+6. [Backup and restore](docs/06-backup-and-restore.md)
+7. [Upgrade Headplane](docs/07-upgrade-headplane.md)
+8. [Troubleshoot if needed](docs/08-troubleshooting.md)
 
 ### 2. Minimal build summary
 
@@ -198,6 +218,17 @@ Then create:
 - `/etc/systemd/system/headplane.service`
 - `/etc/caddy/Caddyfile` route for `/admin/*`
 
+If you want IdP-backed sign-in, continue with the SSO guide after the
+base install is healthy:
+
+- [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
+- [Backup and restore](docs/06-backup-and-restore.md)
+- [Upgrade Headplane](docs/07-upgrade-headplane.md)
+
+If you later roll back to an older archive, read the restore guide first. A
+Headscale database restore rewinds API keys too, so anything minted after the
+backup timestamp is expected to stop working.
+
 ### 4. Verify the result
 
 ```bash
@@ -218,6 +249,16 @@ If all is well:
 - `caddy` is active
 - local `/admin/` answers
 - external `https://headscale.example.net/admin/` reaches Headplane
+
+## Authentication options
+
+- `Headscale API key`: the quickest bootstrap path and the simplest fallback for
+  break-glass admin access
+- `Headplane OIDC`: the built-in SSO path when you want browser login through an
+  external identity provider
+
+If you enable OIDC, Headplane uses its own built-in authentication flow and
+still keeps API key login as an administrative fallback.
 
 ## Pitfalls
 

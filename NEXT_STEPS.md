@@ -1,14 +1,16 @@
 # Next Steps
 
-Updated on 2026-04-27 UTC.
+Updated on 2026-05-13 UTC.
 
 ## Open tasks
 
 1. Add automation for rebuilding and packaging Headplane on the intermediate host.
-2. Add rollback instructions for service and Caddy changes.
-3. Add an OIDC section for Headplane authentication.
-4. Add an agent-enabled installation path after web SSH is validated.
-5. Add a version matrix for future Headplane releases.
+2. Add an agent-enabled installation path after web SSH is validated.
+3. Add a version matrix for future Headplane releases.
+4. Revalidate the OIDC path on a fresh VPS with a real external IdP and capture
+   the exact bootstrap flow.
+5. Recheck the upgrade guide once `0.7.x` becomes stable and compare the field
+   naming against the public docs site again.
 
 ## Nice to have
 

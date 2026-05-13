@@ -18,6 +18,13 @@ Produce a runtime bundle that can be copied to a VPS without rebuilding there.
 - root shell or equivalent sudo access
 - outbound access to GitHub, npm registries, and upstream Go modules
 
+## Upstream version note
+
+As of May 13, 2026, the latest stable Headplane release is still `v0.6.2`.
+The public documentation site also shows newer beta-era wording in a few
+places, so for exact `v0.6.2` build behavior this repository follows the tagged
+release source.
+
 ## Install the toolchain
 
 ```bash
@@ -46,6 +53,13 @@ go version go1.24.4 linux/amd64
 v22.22.2
 10.4.0
 ```
+
+Upstream `v0.6.2` package constraints:
+
+- Node.js `>=22.18 <23`
+- pnpm `>=10.4 <11`
+- Go `1.23+` is a practical minimum for `./build.sh` because the script reads
+  `wasm_exec.js` from the modern Go toolchain path
 
 ## Clone upstream Headplane
 
