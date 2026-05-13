@@ -96,9 +96,9 @@ https://headscale.example.net/admin/login
   один раз попросит выбрать соответствующего пользователя во время первичного
   входа
 
-Если OIDC еще не включен, сначала пройдите дополнительную инструкцию:
+Если OIDC еще не включен, сначала пройдите инструкцию по единому входу:
 
-- [Дополнительно: включение OIDC в Headplane](optional-enable-oidc.md)
+- [Включение единого входа через OIDC](05-enable-sso-oidc.md)
 
 ## Дополнительно проверьте журналы
 
@@ -125,4 +125,4 @@ journalctl -u headplane -n 100 --no-pager | grep -i oidc
 
 ## Навигация
 
-Назад: [Установка на VPS](03-install-on-vps.md) | Вперед: [Дополнительно: включение OIDC в Headplane](optional-enable-oidc.md)
+Назад: [Установка на VPS](03-install-on-vps.md) | Вперед: [Включение единого входа через OIDC](05-enable-sso-oidc.md)

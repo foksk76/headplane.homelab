@@ -143,8 +143,9 @@ build-host.internal
 - `docs/ru/02-transfer-runtime-artifact.md` — перенос исполняемого архива на VPS
 - `docs/ru/03-install-on-vps.md` — установка на `headscale.example.net`
 - `docs/ru/04-verify-and-login.md` — проверка сервиса и вход
-- `docs/ru/optional-enable-oidc.md` — дополнительная настройка OIDC через встроенный механизм Headplane
-- `docs/ru/05-troubleshooting.md` — диагностика
+- `docs/ru/05-enable-sso-oidc.md` — включение единого входа через штатный OIDC-механизм Headplane
+- `docs/ru/06-backup-and-restore.md` — резервное копирование и восстановление
+- `docs/ru/07-troubleshooting.md` — диагностика
 - `HANDOFF.md` — текущее состояние передачи работ
 - `NEXT_STEPS.md` — следующие улучшения репозитория и процесса установки
 - `CHANGELOG.md` — история изменений проверенного сценария развертывания
@@ -161,8 +162,9 @@ build-host.internal
 2. [Перенос исполняемого архива](docs/ru/02-transfer-runtime-artifact.md)
 3. [Установка на VPS](docs/ru/03-install-on-vps.md)
 4. [Проверка и вход](docs/ru/04-verify-and-login.md)
-5. [Дополнительно: включение OIDC в Headplane](docs/ru/optional-enable-oidc.md)
-6. [Диагностика](docs/ru/05-troubleshooting.md)
+5. [Включение единого входа через OIDC](docs/ru/05-enable-sso-oidc.md)
+6. [Резервное копирование и восстановление](docs/ru/06-backup-and-restore.md)
+7. [Диагностика](docs/ru/07-troubleshooting.md)
 
 ### 2. Минимальная сводка по сборке
 
@@ -210,7 +212,8 @@ install -m 0755 /opt/headplane/build/hp_healthcheck /usr/libexec/headplane/healt
 Если нужен вход через внешнего поставщика удостоверений, после проверки
 базовой установки переходите к дополнительной инструкции:
 
-- [Дополнительно: включение OIDC в Headplane](docs/ru/optional-enable-oidc.md)
+- [Включение единого входа через OIDC](docs/ru/05-enable-sso-oidc.md)
+- [Резервное копирование и восстановление](docs/ru/06-backup-and-restore.md)
 
 ### 4. Проверьте результат
 

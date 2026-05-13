@@ -5,7 +5,7 @@ Updated on 2026-05-13 UTC.
 ## Open tasks
 
 1. Add automation for rebuilding and packaging Headplane on the intermediate host.
-2. Add rollback instructions for service, Caddy, and OIDC changes.
+2. Recheck the backup and restore guide against a full rollback drill.
 3. Add an agent-enabled installation path after web SSH is validated.
 4. Add a version matrix for future Headplane releases.
 5. Revalidate the OIDC path on a fresh VPS and capture the exact bootstrap flow.

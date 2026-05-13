@@ -94,9 +94,9 @@ Important behavior from Headplane's native OIDC flow:
 - if Headscale itself uses local users instead of OIDC, Headplane prompts the
   user once to choose the matching Headscale identity during onboarding
 
-If you have not enabled OIDC yet, follow the optional guide first:
+If you have not enabled OIDC yet, follow the SSO guide first:
 
-- [Optional: enable OIDC in Headplane](optional-enable-oidc.md)
+- [Enable SSO with OIDC](05-enable-sso-oidc.md)
 
 ## Optional journal checks
 
@@ -123,4 +123,4 @@ journalctl -u headplane -n 100 --no-pager | grep -i oidc
 
 ## Navigation
 
-Previous: [Install on the VPS](03-install-on-vps.md) | Next: [Optional: enable OIDC in Headplane](optional-enable-oidc.md)
+Previous: [Install on the VPS](03-install-on-vps.md) | Next: [Enable SSO with OIDC](05-enable-sso-oidc.md)

@@ -140,8 +140,9 @@ secrets kept out of the repository.
 - `docs/02-transfer-runtime-artifact.md` - transfer the runtime bundle to the VPS
 - `docs/03-install-on-vps.md` - native install on the anonymized VPS
 - `docs/04-verify-and-login.md` - health checks and login verification
-- `docs/optional-enable-oidc.md` - optional OIDC setup with Headplane's built-in SSO
-- `docs/05-troubleshooting.md` - troubleshooting
+- `docs/05-enable-sso-oidc.md` - enable SSO with Headplane's built-in OIDC flow
+- `docs/06-backup-and-restore.md` - backup and restore before and after changes
+- `docs/07-troubleshooting.md` - troubleshooting
 - `HANDOFF.md` - current repository handoff state
 - `NEXT_STEPS.md` - next improvements for the repository and deployment process
 - `CHANGELOG.md` - change history for the validated deployment path
@@ -158,8 +159,9 @@ bundle, install it natively on the VPS, update Caddy, then verify `/admin`.
 2. [Transfer the runtime artifact](docs/02-transfer-runtime-artifact.md)
 3. [Install on the VPS](docs/03-install-on-vps.md)
 4. [Verify and log in](docs/04-verify-and-login.md)
-5. [Optional: enable OIDC in Headplane](docs/optional-enable-oidc.md)
-6. [Troubleshoot if needed](docs/05-troubleshooting.md)
+5. [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
+6. [Backup and restore](docs/06-backup-and-restore.md)
+7. [Troubleshoot if needed](docs/07-troubleshooting.md)
 
 ### 2. Minimal build summary
 
@@ -204,10 +206,11 @@ Then create:
 - `/etc/systemd/system/headplane.service`
 - `/etc/caddy/Caddyfile` route for `/admin/*`
 
-If you want IdP-backed sign-in, continue with the optional OIDC guide after the
+If you want IdP-backed sign-in, continue with the SSO guide after the
 base install is healthy:
 
-- [Optional: enable OIDC in Headplane](docs/optional-enable-oidc.md)
+- [Enable SSO with OIDC](docs/05-enable-sso-oidc.md)
+- [Backup and restore](docs/06-backup-and-restore.md)
 
 ### 4. Verify the result
 

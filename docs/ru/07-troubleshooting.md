@@ -1,4 +1,4 @@
-Язык: [English](../05-troubleshooting.md) | [Русский](05-troubleshooting.md)
+Язык: [English](../07-troubleshooting.md) | [Русский](07-troubleshooting.md)
 
 # Диагностика
 
@@ -53,14 +53,13 @@
 
 - в `/etc/headplane/config.yaml` отсутствует блок `oidc`
 - `issuer` указан неверно или недоступен с VPS
-- отсутствует `headscale.api_key` или `headscale.api_key_path`
+- отсутствует `oidc.headscale_api_key` или в нем неверное значение
 
 Исправление:
 
 - добавьте полный блок `oidc`
 - проверьте, что URL поставщика удостоверений доступен с хоста Headplane
-- укажите рабочий ключ API Headscale с большим сроком действия для серверных
-  действий OIDC
+- для `v0.6.2` укажите рабочий ключ API Headscale в `oidc.headscale_api_key`
 
 ## Не совпадает `redirect URI` при входе через поставщика удостоверений
 
@@ -130,4 +129,4 @@ caddy fmt --overwrite /etc/caddy/Caddyfile
 
 ## Навигация
 
-Назад: [Дополнительно: включение OIDC в Headplane](optional-enable-oidc.md) | Вперед: [Быстрый старт](../../README.ru.md#быстрый-старт)
+Назад: [Резервное копирование и восстановление](06-backup-and-restore.md) | Вперед: [Быстрый старт](../../README.ru.md#быстрый-старт)

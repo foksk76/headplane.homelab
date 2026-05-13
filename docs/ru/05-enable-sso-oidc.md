@@ -1,20 +1,22 @@
-Язык: [English](../optional-enable-oidc.md) | [Русский](optional-enable-oidc.md)
+Язык: [English](../05-enable-sso-oidc.md) | [Русский](05-enable-sso-oidc.md)
 
-# Дополнительно: включение OIDC в Headplane
+# Включение единого входа через OIDC
 
-Эта инструкция добавляет вход через OIDC с помощью штатного механизма единого
-входа Headplane.
+Эта инструкция добавляет единый вход через штатный OIDC-механизм Headplane.
 Предполагается, что базовая установка из этого репозитория уже работает.
 
-> Статус: этот путь OIDC собран по актуальной официальной документации
-> Headplane по SSO и конфигурации, но еще не прогнан насквозь на анонимизированном
-> примере VPS из этого репозитория.
+> Статус: этот путь повторно проверен на живом Debian 13 VPS с локальным
+> тестовым поставщиком удостоверений. Есть одна важная поправка по версии:
+> Headplane `v0.6.2` ожидает `oidc.headscale_api_key` внутри блока `oidc`.
 
 ## Цель
 
 Сохранить текущий путь `/admin`, добавить вход через внешнего поставщика
 удостоверений и оставить вход по ключу API как запасной административный
 вариант.
+
+Перед изменением входа на рабочем хосте сначала снимите свежую резервную копию
+по инструкции из этого репозитория.
 
 ## Что нужно заранее
 
@@ -44,53 +46,63 @@ https://headscale.example.net/admin/oidc/callback
 переиспользовать один OIDC-клиент, убедитесь, что у этого клиента зарегистрирован
 и адрес возврата Headscale.
 
-## Подготовьте файлы с секретами
+## Подготовьте секреты
 
-Создайте небольшой каталог под секреты:
+Сохраните секрет клиента OIDC в отдельном файле:
 
 ```bash
 install -d -m 0700 /etc/headplane/secrets
 printf '%s\n' 'REPLACE_WITH_OIDC_CLIENT_SECRET' > /etc/headplane/secrets/oidc_client_secret
-printf '%s\n' 'REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY' > /etc/headplane/secrets/headscale_api_key
-chmod 0600 /etc/headplane/secrets/oidc_client_secret /etc/headplane/secrets/headscale_api_key
+chmod 0600 /etc/headplane/secrets/oidc_client_secret
 ```
 
-Подставьте реальный секрет клиента OIDC от своего поставщика удостоверений и
-реальный ключ API Headscale для серверных действий Headplane. Секреты любят
-тишину, а не публичные репозитории.
+Подставьте реальный секрет клиента OIDC от своего поставщика удостоверений.
+Секреты любят тишину, а не публичные репозитории.
 
 ## Дополните `/etc/headplane/config.yaml`
 
-Добавьте в существующий конфиг такие значения:
+Для `v0.6.2` добавьте в существующий конфиг такие значения:
 
 ```yaml
-headscale:
-  url: "http://127.0.0.1:8080"
-  public_url: "https://headscale.example.net"
-  config_path: "/etc/headscale/config.yaml"
-  config_strict: true
-  api_key_path: "/etc/headplane/secrets/headscale_api_key"
-
 oidc:
   issuer: "https://idp.example.com"
+  headscale_api_key: "REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY"
   client_id: "REPLACE_WITH_OIDC_CLIENT_ID"
   client_secret_path: "/etc/headplane/secrets/oidc_client_secret"
   scope: "openid email profile"
   use_pkce: true
+  disable_api_key_login: false
 ```
 
 Замечания:
 
-- `headscale.api_key_path` обязателен для OIDC в Headplane
+- в `v0.6.2` для OIDC обязателен `oidc.headscale_api_key`
 - `client_secret_path` позволяет не хранить секрет клиента прямо в основном
   конфиге
 - Headplane сам умеет находить `authorization`, `token` и `userinfo` endpoint
   по метаданным `issuer`
 - `use_pkce: true` — хороший вариант по умолчанию, потому что некоторые
   поставщики без него начинают капризничать
+- `disable_api_key_login: false` оставляет вход по ключу API как аварийный путь
 
 Если поставщику удостоверений нужны дополнительные параметры авторизации,
 добавьте их в `oidc.extra_params`.
+
+## Дополнительно: локальный тестовый поставщик удостоверений
+
+Если хотите сначала проверить сам сценарий OIDC, а уже потом подключать боевой
+внешний сервис, можно поднять небольшой локальный Dex за Caddy.
+
+Проверенная схема:
+
+```text
+https://headscale.example.net/idp
+  -> Caddy
+  -> Dex на 127.0.0.1:5556
+```
+
+Для smoke test это удобно. Для постоянной жизни все же лучше использовать
+нормальный внешний поставщик удостоверений.
 
 ## Перезапустите Headplane
 
@@ -122,8 +134,8 @@ https://headscale.example.net/admin/login
   попросит выбрать соответствующую запись Headscale
 
 После первого успешного входа через OIDC зайдите на страницу пользователей и
-раздайте роли руками. Маленькая скучная операция, зато потом меньше веселья в
-журналах.
+раздайте роли руками. Небольшая скучная операция сейчас обычно означает меньше
+шума в журналах потом.
 
 ## Быстрые проверки
 
@@ -140,4 +152,4 @@ journalctl -u headplane -n 100 --no-pager | grep -i oidc
 
 ## Навигация
 
-Назад: [Проверка и вход](04-verify-and-login.md) | Вперед: [Диагностика](05-troubleshooting.md)
+Назад: [Проверка и вход](04-verify-and-login.md) | Вперед: [Резервное копирование и восстановление](06-backup-and-restore.md)

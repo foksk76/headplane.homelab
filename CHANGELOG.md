@@ -9,13 +9,18 @@ packaging, proxying, installation, or verification flow.
 
 ### Added
 
-- An optional OIDC authentication path using Headplane's built-in SSO
-  mechanism, including callback handling and secret-file examples.
+- A dedicated SSO guide for Headplane's built-in OIDC flow.
+- A dedicated backup and restore guide for configuration and local state before
+  risky changes.
 
 ### Changed
 
 - The login flow now documents both Headscale API key access and Headplane's
   native OIDC path.
+- The guide naming now follows the numbered step-by-step style across OIDC,
+  backup/restore, and troubleshooting.
+- The OIDC configuration notes now reflect the validated `v0.6.2` behavior
+  using `oidc.headscale_api_key`.
 
 ## 0.1.1 - 2026-04-27
 

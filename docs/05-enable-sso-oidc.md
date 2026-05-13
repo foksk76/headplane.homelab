@@ -1,18 +1,21 @@
-Language: [English](optional-enable-oidc.md) | [Русский](ru/optional-enable-oidc.md)
+Language: [English](05-enable-sso-oidc.md) | [Русский](ru/05-enable-sso-oidc.md)
 
-# Optional: Enable OIDC in Headplane
+# Enable SSO with OIDC
 
-This guide adds OIDC login through Headplane's built-in SSO mechanism.
+This guide adds browser SSO through Headplane's built-in OIDC mechanism.
 It assumes that the base installation from this repository is already working.
 
-> Status: This OIDC path is aligned with the current upstream Headplane SSO and
-> configuration documentation, but it has not yet been revalidated end-to-end
-> on the anonymized example VPS from this repository.
+> Status: This path was rechecked against a live Debian 13 VPS with a local test
+> IdP. One version-specific detail matters: Headplane `v0.6.2` expects
+> `oidc.headscale_api_key` in the `oidc` block.
 
 ## Goal
 
 Keep the existing `/admin` deployment path, add IdP-backed browser login, and
 preserve API key access as a fallback for administrators.
+
+Before changing authentication on a live host, take a fresh archive with the
+backup guide from this repository.
 
 ## Requirements
 
@@ -41,50 +44,60 @@ If Headscale already uses the same identity provider and you want to reuse the
 same OIDC client, also make sure the Headscale callback URL is present on that
 client.
 
-## Prepare secret files
+## Prepare secrets
 
-Create a small directory for secrets:
+Store the OIDC client secret on disk:
 
 ```bash
 install -d -m 0700 /etc/headplane/secrets
 printf '%s\n' 'REPLACE_WITH_OIDC_CLIENT_SECRET' > /etc/headplane/secrets/oidc_client_secret
-printf '%s\n' 'REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY' > /etc/headplane/secrets/headscale_api_key
-chmod 0600 /etc/headplane/secrets/oidc_client_secret /etc/headplane/secrets/headscale_api_key
+chmod 0600 /etc/headplane/secrets/oidc_client_secret
 ```
 
-Use a real OIDC client secret from your identity provider and a real Headscale
-API key created for Headplane's server-side actions.
+Use a real OIDC client secret from your identity provider.
 
 ## Extend `/etc/headplane/config.yaml`
 
-Merge this into your existing configuration:
+Merge this into your existing configuration for `v0.6.2`:
 
 ```yaml
-headscale:
-  url: "http://127.0.0.1:8080"
-  public_url: "https://headscale.example.net"
-  config_path: "/etc/headscale/config.yaml"
-  config_strict: true
-  api_key_path: "/etc/headplane/secrets/headscale_api_key"
-
 oidc:
   issuer: "https://idp.example.com"
+  headscale_api_key: "REPLACE_WITH_LONG_LIVED_HEADSCALE_API_KEY"
   client_id: "REPLACE_WITH_OIDC_CLIENT_ID"
   client_secret_path: "/etc/headplane/secrets/oidc_client_secret"
   scope: "openid email profile"
   use_pkce: true
+  disable_api_key_login: false
 ```
 
 Notes:
 
-- `headscale.api_key_path` is required for OIDC in Headplane
+- in `v0.6.2`, `oidc.headscale_api_key` is required for OIDC in Headplane
 - `client_secret_path` keeps the OIDC secret out of the main config file
 - Headplane can auto-discover the authorization, token, and userinfo endpoints
   from the issuer metadata
 - `use_pkce: true` is a good default because some IdPs insist on it
+- `disable_api_key_login: false` preserves API key access as a break-glass path
 
 If your provider requires extra authorization parameters, add them under
 `oidc.extra_params`.
+
+## Optional: local test IdP
+
+If you want to prove the OIDC flow before wiring in a real identity provider,
+you can use a small local Dex service behind Caddy.
+
+Validated example shape:
+
+```text
+https://headscale.example.net/idp
+  -> Caddy
+  -> Dex on 127.0.0.1:5556
+```
+
+This is useful for smoke tests, but a real external IdP is still the proper
+destination for a long-lived setup.
 
 ## Restart Headplane
 
@@ -116,8 +129,7 @@ What to expect:
   Headscale identity once
 
 After the first successful OIDC login, review the Users page and assign roles
-deliberately. This is one of those five-minute tasks that saves an annoying
-fifteen-minute cleanup later.
+deliberately. Five boring minutes here beat fifteen noisy ones later.
 
 ## Quick checks
 
@@ -133,4 +145,4 @@ Useful signs:
 
 ## Navigation
 
-Previous: [Verify and log in](04-verify-and-login.md) | Next: [Troubleshoot if needed](05-troubleshooting.md)
+Previous: [Verify and log in](04-verify-and-login.md) | Next: [Backup and restore](06-backup-and-restore.md)

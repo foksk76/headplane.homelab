@@ -1,4 +1,4 @@
-Language: [English](05-troubleshooting.md) | [Русский](ru/05-troubleshooting.md)
+Language: [English](07-troubleshooting.md) | [Русский](ru/07-troubleshooting.md)
 
 # Troubleshooting
 
@@ -53,13 +53,13 @@ Cause:
 
 - the `oidc` block is missing from `/etc/headplane/config.yaml`
 - `issuer` is wrong or unreachable from the VPS
-- `headscale.api_key` or `headscale.api_key_path` is missing
+- `oidc.headscale_api_key` is missing or invalid
 
 Fix:
 
 - add a complete `oidc` section
 - verify that the issuer URL is reachable from the Headplane host
-- provide a working long-lived Headscale API key for server-side OIDC actions
+- for `v0.6.2`, provide a working long-lived key in `oidc.headscale_api_key`
 
 ## `Redirect URI Mismatch` during IdP login
 
@@ -128,4 +128,4 @@ This is cosmetic and does not block runtime if `caddy validate` already says
 
 ## Navigation
 
-Previous: [Optional: enable OIDC in Headplane](optional-enable-oidc.md) | Next: [Quick start](../README.md#quick-start)
+Previous: [Backup and restore](06-backup-and-restore.md) | Next: [Quick start](../README.md#quick-start)
