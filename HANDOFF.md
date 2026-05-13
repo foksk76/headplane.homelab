@@ -21,7 +21,7 @@ repository so work can resume quickly in another chat, shell, or host session.
 - Step-by-step docs for build, transfer, install, verify, and troubleshooting
 - Russian step-by-step docs in `docs/ru/`
 - README badges and `Docs` link-check workflow in `.github/workflows/docs.yml`
-- Governance files: `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `LICENSE`
+- Repo support files: `CHANGELOG.md` as the change history for the deployment path, plus `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, and `LICENSE`
 
 ## Suggested resume commands
 

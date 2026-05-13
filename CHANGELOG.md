@@ -1,23 +1,36 @@
 # Changelog
 
-All notable changes to this repository will be documented in this file.
+This file tracks changes to the validated Headplane deployment path in this
+repository.
+It does not list routine edits to the prose unless they change the actual build,
+packaging, proxying, installation, or verification flow.
 
 ## 0.1.1 - 2026-04-27
 
-- Updated the release badge to follow the latest repository tag.
+### Added
 
-## 2026-04-27
+- A validated build path for Headplane `v0.6.2` on an intermediate Debian 13
+  host with Node.js `22.x`, `pnpm 10.x`, and Go `1.24.x`.
+- A native VPS installation path for Debian 13 with Headscale and Caddy already
+  present on the target host.
+- A runtime packaging step that ships the built application, helper binaries,
+  production dependencies, and required migration files without dragging the
+  full build toolchain onto the VPS.
+- A verification flow for local and public endpoints before first login.
 
-- Prepared the local documentation version for building Headplane in a homelab.
-- Added bilingual `README.md` and `README.ru.md` with anonymized host examples.
-- Added English and Russian step-by-step documentation for:
-  - building on an intermediate host
-  - transferring the runtime artifact
-  - installing on the VPS
-  - verifying the deployment
-  - troubleshooting known failures
-- Added component inventory details for FQDNs, IP placeholders, operating systems, and main software.
-- Documented how to generate `REPLACE_WITH_32_CHARS` and `REUSABLE_PREAUTHKEY`.
-- Added README badges and a GitHub Actions link-check workflow for documentation.
-- Moved external reference links into the overview section and made them clickable.
-- Added an introductory README paragraph describing the practical access problem behind the setup.
+### Fixed
+
+- Startup failure caused by a missing `drizzle/meta/_journal.json` by keeping
+  `drizzle/` in the runtime archive.
+- Headplane `v0.6.2` config validation failure by removing `integration.agent`
+  completely from the no-agent deployment path.
+- Incorrect `server.base_url` handling by documenting it without the `/admin`
+  suffix.
+- Reverse proxy routing so `/admin/*` stays on Headplane and the remaining
+  traffic continues to reach Headscale.
+
+### Removed
+
+- Production source maps from the shipped runtime archive.
+- The unused `integration.agent` block from the default deployment path when
+  web SSH and agent features are not enabled.

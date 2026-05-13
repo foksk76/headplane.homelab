@@ -139,7 +139,7 @@ secrets kept out of the repository.
 - `docs/05-troubleshooting.md` - troubleshooting
 - `HANDOFF.md` - current repository handoff state
 - `NEXT_STEPS.md` - next improvements for the repository and deployment process
-- `CHANGELOG.md` - documentation history
+- `CHANGELOG.md` - change history for the validated deployment path
 - `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `LICENSE` - repository governance files
 
 ## Quick start
